@@ -73,25 +73,25 @@
             // labelscore
             // 
             labelscore.BackColor = Color.Transparent;
-            labelscore.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelscore.ForeColor = Color.Khaki;
-            labelscore.Location = new Point(293, 0);
+            labelscore.Font = new Font("Segoe UI Black", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelscore.ForeColor = Color.Yellow;
+            labelscore.Location = new Point(0, 0);
             labelscore.Name = "labelscore";
-            labelscore.Size = new Size(188, 38);
+            labelscore.Size = new Size(mainpanel.Width, 80);
             labelscore.TabIndex = 1;
             labelscore.Text = "SCORE:0";
-            labelscore.TextAlign = ContentAlignment.MiddleLeft;
+            labelscore.TextAlign = ContentAlignment.TopRight;
             labelscore.Click += labelscore_Click;
             // 
             // labellevel
             // 
             labellevel.AutoSize = true;
             labellevel.BackColor = Color.Transparent;
-            labellevel.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labellevel.ForeColor = Color.DarkOrange;
-            labellevel.Location = new Point(12, 4);
+            labellevel.Font = new Font("Segoe UI Black", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labellevel.ForeColor = Color.Lime;
+            labellevel.Location = new Point(12, 10);
             labellevel.Name = "labellevel";
-            labellevel.Size = new Size(79, 28);
+            labellevel.Size = new Size(180, 65);
             labellevel.TabIndex = 4;
             labellevel.Text = "Level:1";
             // 

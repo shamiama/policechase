@@ -18,18 +18,37 @@ namespace policechase.Entiities
         // Domain state
         // Jump State
         public int Health { get; set; } = 100;
+        public int MaxHealth { get; set; } = 100;
+        public int Energy { get; set; } = 50;
+        public int MaxEnergy { get; set; } = 100;
         public int CoinCount { get; set; } = 0;
         public event Action CoinCollected;
         public bool IsJumping { get; private set; } = false;
+        public bool IsNitroActive { get; set; } = false;
         private int jumpTimer = 0;
+        private int iFrameTimer = 0; // Invulnerability frames after being hit
         private SizeF originalSize;
 
         public override void Update(GameTime gameTime)
         {
             if (originalSize.IsEmpty) originalSize = Size;
 
+            // Handle Energy consumption for Nitro
+            if (IsNitroActive && Energy > 0)
+            {
+                // Consume energy every frame while nitro is pushed
+                Energy--; 
+                if (Energy <= 0)
+                {
+                    Energy = 0;
+                    IsNitroActive = false; // Force off
+                }
+            }
+
             Movement?.Move(this, gameTime);
             base.Update(gameTime);
+
+            if (iFrameTimer > 0) iFrameTimer--;
 
             if (IsJumping)
             {
@@ -59,8 +78,11 @@ namespace policechase.Entiities
         {
             if (other is Enemy)
             {
-                if (!IsJumping) // Invulnerable while jumping
-                    Health = 0; 
+                if (!IsJumping && !IsNitroActive) 
+                {
+                    Health = 0; // Immediate death on car crash
+                    iFrameTimer = 0; 
+                }
             }
 
             if (other is Coin && other.IsActive)
@@ -70,8 +92,9 @@ namespace policechase.Entiities
                 CoinCollected?.Invoke();
             }
 
-            if (other is PowerUp)
-                Health += 20;
+            // Power-up logic will be handled by the PowerUp/Booster objects themselves
+            // but we keep this as a fallback if needed.
+            // if (other is PowerUp) Health = Math.Min(MaxHealth, Health + 20);
         }
     }
 

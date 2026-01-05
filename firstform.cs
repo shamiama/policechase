@@ -29,12 +29,11 @@ namespace policechase
             this.DoubleBuffered = true; // Reduce flickering
             this.KeyPreview = true; // Allow form to catch keys
 
-            // Hide designer controls as we will draw manually
-            playercar.Visible = false;
-            enemycar1.Visible = false;
-            enemycar2.Visible = false;
-            enemycar3.Visible = false;
-            fireimage.Visible = false;
+            // Hide and remove designer controls as we will draw manually
+            foreach (Control ctrl in mainpanel.Controls.OfType<PictureBox>().ToList())
+            {
+                ctrl.Visible = false;
+            }
 
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -196,7 +195,7 @@ namespace policechase
                 if (_announcementAlpha < 0) _announcementAlpha = 0;
             }
 
-            labelscore.Text = $"Score:{_game.Score} Coins:{_player.CoinCount} Best:{_game.HighScore}";
+            labelscore.Text = $"Score:{_game.Score} Coins:{_player.CoinCount}";
 
             // Redraw
             mainpanel.Invalidate();
@@ -300,10 +299,38 @@ namespace policechase
 
                                 e.Graphics.DrawString(line, font, lgb, x, y);
                             }
-                            
                             startY += size.Height + 10;
                         }
                     }
+                }
+
+                // Draw Health and Energy Bars
+                int barWidth = 300;
+                int barHeight = 25;
+                int margin = 20;
+
+
+                // Energy Bar Background
+                int energyY = margin + 60; // Moved down to avoid overlap with large Level text
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, 0, 0, 0)), margin, energyY, barWidth, barHeight);
+                float energyRatio = (float)_player.Energy / _player.MaxEnergy;
+                if (energyRatio > 0)
+                {
+                    using (var energyBrush = new System.Drawing.Drawing2D.LinearGradientBrush(new Rectangle(margin, energyY, (int)(barWidth * energyRatio), barHeight), Color.DarkBlue, Color.Cyan, 90f))
+                    {
+                        e.Graphics.FillRectangle(energyBrush, margin, energyY, (int)(barWidth * energyRatio), barHeight);
+                    }
+                }
+                e.Graphics.DrawRectangle(Pens.White, margin, energyY, barWidth, barHeight);
+                e.Graphics.DrawString($"ENERGY: {_player.Energy}", new Font("Segoe UI", 12, FontStyle.Bold), Brushes.White, margin + 5, energyY + 2);
+
+                // Draw Nitro Effect (Fire behind car)
+                if (_player.IsNitroActive && !_game.IsGameOver && fireimage.BackgroundImage != null)
+                {
+                    // Draw fire behind the player
+                    e.Graphics.DrawImage(fireimage.BackgroundImage, 
+                        _player.Position.X, _player.Position.Y + _player.Size.Height - 10, 
+                        _player.Size.Width, 40);
                 }
 
                 if (_game.IsGameOver)
@@ -313,8 +340,8 @@ namespace policechase
                         e.Graphics.DrawImage(fireimage.BackgroundImage,
                            _player.Position.X, _player.Position.Y, 50, 50);
                     }
-                    // Manual drawing of posters, medals, and score removed as per user request (added to pictureBox instead)
-                }
+                 }
+
             }
         }
 

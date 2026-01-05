@@ -12,7 +12,7 @@ namespace policechase.Movements
         private float bottomBound;
         private bool loop;
 
-        public Vertical(float speed = 5f, float top = 0f, float bottom = 600f, bool loop = true)
+        public Vertical(float speed = 5f, float top = -500f, float bottom = 5000f, bool loop = true)
         {
             this.speed = speed;
             this.topBound = top;

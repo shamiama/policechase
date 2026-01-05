@@ -46,7 +46,7 @@ namespace policechase.Entiities
         /// On collision, enemy deactivates when hit by bullets (encapsulation of reaction logic inside the entity).
         public override void OnCollision(GameObject other)
         {
-            if (other is Bullet) // Bullet usage example
+            if (other is Bullet || other is Player)
                 IsActive = false;
         }
     }

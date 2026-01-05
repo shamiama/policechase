@@ -12,7 +12,7 @@ namespace policechase.Core
     {
         private Random random = new Random();
         private int spawnTimer = 0;
-        private int spawnInterval = 8; // Spawn EXTREMELY frequently (initially)
+        private int spawnInterval = 12; // Increased slightly from 8 to prevent overcrowding
         private Game game;
 
         public int EnemySpeed { get; set; } = 40; // Extreme Base Speed!
@@ -34,8 +34,18 @@ namespace policechase.Core
 
         private void SpawnEnemy()
         {
-            // 40% Chance to spawn a Coin (Slightly less, more enemies)
-            if (random.NextDouble() < 0.4)
+            // 15% Chance to spawn an Energy Booster
+            double rand = random.NextDouble();
+            if (rand < 0.15)
+            {
+                var booster = new EnergyBooster(game);
+                booster.Position = new PointF(random.Next(50, game.ScreenWidth - 100), -100);
+                game.AddObject(booster);
+                return;
+            }
+
+            // 35% Chance to spawn a Coin
+            if (rand < 0.5)
             {
                 var coin = new Coin();
                 coin.Position = new PointF(random.Next(50, game.ScreenWidth - 100), -30);
@@ -49,22 +59,27 @@ namespace policechase.Core
             enemy.Position = new PointF(random.Next(50, game.ScreenWidth - 150), -180); 
             enemy.Size = new SizeF(120, 190); // Bigger enemies
             
-            // Randomly assign movement patterns
-            int pattern = random.Next(4);
+            float speedVariation = (float)(random.NextDouble() * 10 - 5); // +/- 5 speed variation
+            float currentSpeed = EnemySpeed + speedVariation;
+
+            // Randomly assign movement patterns (more likely to be default straight)
+            int pattern = random.Next(10); // 0-9
             switch (pattern)
             {
                 case 0:
-                    enemy.Movement = new Zigzag(verticalSpeed: EnemySpeed, amplitude: 100);
+                    enemy.Movement = new Zigzag(verticalSpeed: currentSpeed, amplitude: 80);
+                    enemy.Velocity = PointF.Empty; 
                     break;
                 case 1:
-                    enemy.Movement = new Jumping(verticalSpeed: EnemySpeed);
+                    enemy.Movement = new Jumping(verticalSpeed: currentSpeed);
+                    enemy.Velocity = PointF.Empty; 
                     break;
                 case 2:
-                    enemy.Movement = new Vertical(speed: EnemySpeed);
+                    enemy.Movement = new Vertical(speed: currentSpeed, bottom: 5000f); 
+                    enemy.Velocity = PointF.Empty; 
                     break;
                 default:
-                    // Default downward movement (handled by velocity)
-                    enemy.Velocity = new PointF(0, EnemySpeed);
+                    enemy.Velocity = new PointF(0, currentSpeed);
                     break;
             }
 
@@ -85,11 +100,11 @@ namespace policechase.Core
 
         public void IncreaseDifficulty()
         {
-            // Allow interval to go lower, down to 4
-            if (spawnInterval > 4)
+            // Allow interval to go lower, down to 8 (balanced for speed)
+            if (spawnInterval > 8)
                 spawnInterval -= 1;
             
-            EnemySpeed += 10; // Double the difficulty scaling per level
+            EnemySpeed += 10; 
         }
     }
 }

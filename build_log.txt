@@ -1,0 +1,29 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+c:\Users\User\source\repos\policechase\firstform.cs(16,26): warning CS8981: The type name 'firstform' only contains lower-cased ascii characters. Such names may become reserved for the language. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.Designer.cs(3,19): warning CS8981: The type name 'firstform' only contains lower-cased ascii characters. Such names may become reserved for the language. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(25,32): warning CS8622: Nullability of reference types in type of parameter 'sender' of 'void firstform.mainpanel_Paint(object sender, PaintEventArgs e)' doesn't match the target delegate 'PaintEventHandler' (possibly because of nullability attributes). [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(22,16): warning CS8618: Non-nullable field '_game' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(22,16): warning CS8618: Non-nullable field '_player' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Extensions\PowerUp.cs(27,24): error CS1061: 'Player' does not contain a definition for 'Health' and no accessible extension method 'Health' accepting a first argument of type 'Player' could be found (are you missing a using directive or an assembly reference?) [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Entiities\Player.cs(59,21): error CS0103: The name 'Health' does not exist in the current context [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Entiities\Player.cs(69,17): error CS0103: The name 'Health' does not exist in the current context [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Core\Game.cs(75,53): error CS1061: 'Player' does not contain a definition for 'Health' and no accessible extension method 'Health' accepting a first argument of type 'Player' could be found (are you missing a using directive or an assembly reference?) [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(131,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [c:\Users\User\source\repos\policechase\policechase.csproj]
+
+Build FAILED.
+
+c:\Users\User\source\repos\policechase\firstform.cs(16,26): warning CS8981: The type name 'firstform' only contains lower-cased ascii characters. Such names may become reserved for the language. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.Designer.cs(3,19): warning CS8981: The type name 'firstform' only contains lower-cased ascii characters. Such names may become reserved for the language. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(25,32): warning CS8622: Nullability of reference types in type of parameter 'sender' of 'void firstform.mainpanel_Paint(object sender, PaintEventArgs e)' doesn't match the target delegate 'PaintEventHandler' (possibly because of nullability attributes). [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(22,16): warning CS8618: Non-nullable field '_game' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(22,16): warning CS8618: Non-nullable field '_player' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\firstform.cs(131,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Extensions\PowerUp.cs(27,24): error CS1061: 'Player' does not contain a definition for 'Health' and no accessible extension method 'Health' accepting a first argument of type 'Player' could be found (are you missing a using directive or an assembly reference?) [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Entiities\Player.cs(59,21): error CS0103: The name 'Health' does not exist in the current context [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Entiities\Player.cs(69,17): error CS0103: The name 'Health' does not exist in the current context [c:\Users\User\source\repos\policechase\policechase.csproj]
+c:\Users\User\source\repos\policechase\Core\Game.cs(75,53): error CS1061: 'Player' does not contain a definition for 'Health' and no accessible extension method 'Health' accepting a first argument of type 'Player' could be found (are you missing a using directive or an assembly reference?) [c:\Users\User\source\repos\policechase\policechase.csproj]
+    6 Warning(s)
+    4 Error(s)
+
+Time Elapsed 00:00:01.15

@@ -1,5 +1,6 @@
 ﻿using policechase.Core;
 using policechase.Entiities;
+using policechase.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace policechase.Movements
 {
-    internal class Chasing:GameObject
+    public class ChasingMovement : IMovement
     {
         private GameObject target;
         private float speed;
 
-        public Chasing(GameObject target, float speed = 3f)
+        public ChasingMovement(GameObject target, float speed = 3f)
         {
             this.target = target;
             this.speed = speed;
@@ -28,8 +29,8 @@ namespace policechase.Movements
             if (distance > 0)
             {
                 obj.Position = new PointF(
-                    obj.Position.X + speed * dx / distance,
-                    obj.Position.Y + speed * dy / distance
+                    obj.Position.X + (speed * dx / distance),
+                    obj.Position.Y + (speed * dy / distance)
                 );
             }
         }

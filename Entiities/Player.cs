@@ -16,29 +16,59 @@ namespace policechase.Entiities
         public IMovement? Movement { get; set; }
 
         // Domain state
+        // Jump State
         public int Health { get; set; } = 100;
-        public int Score { get; set; } = 0;
+        public int CoinCount { get; set; } = 0;
+        public event Action CoinCollected;
+        public bool IsJumping { get; private set; } = false;
+        private int jumpTimer = 0;
+        private SizeF originalSize;
 
-        /// Update the player: delegate movement to the Movement strategy (if provided) and then apply base update.
-        /// Shows the Strategy pattern (movement behavior varies independently from Player class).
         public override void Update(GameTime gameTime)
         {
+            if (originalSize.IsEmpty) originalSize = Size;
+
             Movement?.Move(this, gameTime);
             base.Update(gameTime);
+
+            if (IsJumping)
+            {
+                jumpTimer--;
+                if (jumpTimer <= 0)
+                {
+                    IsJumping = false;
+                    IsIntangible = false;
+                    Size = originalSize; // Reset size
+                }
+            }
         }
 
-        /// Draw uses base implementation; override if player needs custom visuals.
-
-        public override void Draw(Graphics g)
+        public void Jump()
         {
-            base.Draw(g);
+            if (CoinCount >= 5 && !IsJumping)
+            {
+                CoinCount -= 5;
+                IsJumping = true;
+                IsIntangible = true; // Use IsIntangible to prevent physics pushing
+                jumpTimer = 100; // Increased jump duration
+                Size = new SizeF(originalSize.Width * 1.5f, originalSize.Height * 1.5f); // Increased zoom effect
+            }
         }
 
-        /// Collision reaction for the player. Demonstrates single responsibility: domain reaction is handled here.
         public override void OnCollision(GameObject other)
         {
             if (other is Enemy)
-                Health -= 10;
+            {
+                if (!IsJumping) // Invulnerable while jumping
+                    Health = 0; 
+            }
+
+            if (other is Coin && other.IsActive)
+            {
+                CoinCount++;
+                other.IsActive = false; // Collect coin
+                CoinCollected?.Invoke();
+            }
 
             if (other is PowerUp)
                 Health += 20;

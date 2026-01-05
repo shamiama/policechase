@@ -18,7 +18,12 @@ namespace policechase
             {
                 for (int j = i + 1; j < collidables.Count; j++)
                 {
-                    if (collidables[i].Bounds.IntersectsWith(collidables[j].Bounds))
+                    var a = (GameObject)collidables[i];
+                    var b = (GameObject)collidables[j];
+
+                    if (!a.IsActive || !b.IsActive) continue;
+
+                    if (a.Bounds.IntersectsWith(b.Bounds))
                     {
                         // Collision detected between two collidables.
                         // Primary responsibilities:
@@ -27,12 +32,12 @@ namespace policechase
                         // - Apply special rigid-body behavior if flagged
                         // - Notify objects so they can react (OnCollision)
 
-                        var a = (GameObject)collidables[i];
-                        var b = (GameObject)collidables[j];
-
                         // Compute the intersection rectangle (axis-aligned overlap)
                         var overlap = RectangleF.Intersect(a.Bounds, b.Bounds);
-                        if (overlap.Width > 0 && overlap.Height > 0)
+                        
+                        // Physics Resolution: Push objects apart
+                        // Skip if either object is Intangible (e.g. Jumping Player, or Sensor)
+                        if (overlap.Width > 0 && overlap.Height > 0 && !a.IsIntangible && !b.IsIntangible)
                         {
                             // Handle rigid-body cases specially: immovable objects stop others
                             if (a.IsRigidBody && !b.IsRigidBody)

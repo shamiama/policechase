@@ -34,6 +34,9 @@ namespace policechase.Entiities
         // (velocity will be cleared and physics disabled to prevent gravity from moving it).
         public bool IsRigidBody { get; set; } = false;
 
+        // If true, physics resolution (pushing apart) is skipped, but collision events still fire.
+        public bool IsIntangible { get; set; } = false;
+
         // Optional sprite for rendering
         public Image? Sprite { get; set; } = null;
 
